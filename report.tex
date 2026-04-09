@@ -1,0 +1,112 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{parskip}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+
+\definecolor{ink}{HTML}{162033}
+\definecolor{accent}{HTML}{7A2E2E}
+\definecolor{muted}{HTML}{4A5568}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=accent,
+    urlcolor=accent,
+    pdftitle={CMPE49G Project 3 Generative Art with Diffusion, Flow Field, Perlin Noise},
+    pdfauthor={Duran Kaan Altın - 2020400108},
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{CMPE49G Project 3}
+\fancyhead[R]{Generative Art Portfolio}
+\fancyfoot[C]{\thepage}
+\setlength{\headheight}{14pt}
+
+\newcommand{\artpage}[5]{
+    \clearpage
+    \thispagestyle{empty}
+
+    \begin{center}
+        {\fontsize{22}{26}\selectfont\bfseries\color{ink} #1\par}
+        \vspace{0.35em}
+        {\large\itshape\color{accent} #2\par}
+    \end{center}
+
+    \vspace{0.8em}
+    \begin{center}
+        \includegraphics[width=\textwidth,height=0.9\textheight,keepaspectratio]{#3}
+    \end{center}
+
+    \vspace{0.7em}
+    {\bfseries Story:} #4
+
+    \vspace{0.5em}
+    {\bfseries Method:} #5
+}
+
+\begin{document}
+
+\begin{center}
+    {\LARGE\bfseries\color{ink} CMPE49G Project 3 Report\par}
+    \vspace{0.4em}
+    {\large Generative Art Portfolio and Perlin Noise Study\par}
+    \vspace{1em}
+    \begin{tabular}{rl}
+        Student ID: & \texttt{2020400108} \\
+        Name: & Duran Kaan Altın \\
+        File Name: & \texttt{2020400108\_prj3\_DuranKaan\_Altın.pdf}
+    \end{tabular}
+\end{center}
+
+\vspace{1.3em}
+
+\section{Introduction}
+Instead of drawing each part by hand, generative art is the process of making visual art using a rule-based system. In a generative workflow, the artist decides how the process will work. They choose the mathematical model, the color scheme, the spatial limits, the amount of randomness, and the visual limits that will determine how the final image looks. The computer then runs this system and gives a result that is both written by a person and not completely predictable. Generative art is useful for computational creativity because it strikes a balance between control and surprise. Changing a rule just a little bit can make a very different picture, so experimenting becomes part of the artistic process instead of a separate step.
+
+In practice, generative art often combines deterministic structure with stochastic variation. Deterministic parts give the work coherence, repetition, rhythm, and recognizable geometry. Random or pseudo-random parts prevent the piece from feeling mechanical and allow each output to have its own character. As a result of this, generative artists usually think in terms of systems: particle motion, fields, growth models, reaction-diffusion patterns, grids, cellular structures, or layered noise. Therefore, the final artwork is the visible trace of a process unfolding across space or through time. For this project, I used diffusion, force fields, and noise-driven deformation to explore how mathematical rules can suggest memory, pressure, interference, or biological growth.
+
+\subsection{Perlin Noise}
+Perlin noise is a procedural noise function designed to produce smooth, natural-looking alteration. As an opposite of white noise, which changes abruptly from point to point, Perlin noise differs continuously, so neighboring locations tend to have related values. This makes it useful for textures, terrains, clouds, smoke, flow fields, and organic geometric distortion. In visual computing, Perlin noise is especially effective when an image needs complexity without looking purely random.
+
+The main idea is to sample a coordinate in space and receive a scalar value that changes gradually as the coordinate moves. Since the output is smooth, that value can be mapped to an angle, a radius, an opacity, or a displacement vector. Multiple octaves of noise can also be combined to mixed large-scale structure with much finer detail. In this project, I used Perlin noise both as a directional field for particle movement and as a deformation source for geometric layouts. This gave the images an organic quality: the images remain mathematically generated, but they avoid the hard edges and repetitive regularity that would result from using only rigid grids or purely random steps.
+
+Another reason Perlin noise is important in generative art is reproducibility. Once the seed and the parameters are fixed, exactly the same noise field can be regenerated. That means the artist can tune a process, compare variations, and preserve the final result without losing the underlying structure. To sum up, Perlin noise acts as a bridge between randomness and control: it is flexible enough to create surprise, yet stable enough to remain part of a carefully designed visual system.
+
+\artpage
+    {Turbulent Memory}
+    {Flow-field trajectories shaped by Perlin noise and diffusion}
+    {report_assets/turbulent_memory.png}
+    {This piece imagines memory as a moving field instead of a fixed archive. The trajectories drift in related directions, but each path is continually disturbed by diffusion, so the structure never settles into something fully stable. The brighter terminal points suggest fragments that remain visible even after the larger flow has dissolved.}
+    {Particles are initialized across the canvas and advected by a Perlin-noise flow field. At each step a Brownian diffusion term is added, producing wandering trails rather than perfectly smooth curves. The image is built by layering many thin line segments so density becomes visible over time.}
+
+\artpage
+    {Vortex Constellation}
+    {A celestial field governed by competing rotational wells}
+    {report_assets/vortex_constellation.png}
+    {This work treats space as if it were organized by invisible stars with rotational pull. Instead of collapsing directly into attractors, particles circle, negotiate, and escape across overlapping vortices, which makes the composition feel both astronomical and unstable. The visual suggests a map of hidden centers of influence rather than a static night sky.}
+    {The image is generated from a vector field built from several vortices with alternating spin directions. Each particle follows the combined tangential motion of these vortices, while diffusion and a weak confinement term prevent the trajectories from becoming too rigid or from leaving the frame. Trails are layered with low opacity so circulation patterns emerge gradually.}
+
+\artpage
+    {Wavefront Interference}
+    {Damped radial waves frozen into a contour landscape}
+    {report_assets/wavefront_interference.png}
+    {This piece frames the canvas as a shared medium where several signal sources speak at once. Some regions reinforce each other, others cancel, and the visible bands record that conflict as if the viewer were looking at a frozen acoustic event. The result is less about a single object and more about tension distributed across a field.}
+    {A scalar field is formed by summing several damped radial sine waves emitted from different source points. The magnitude of the field is rendered as a luminous base layer, while contour lines expose the interference structure created by changes in phase, amplitude, and distance. The combined image behaves like a topographic portrait of overlapping waves.}
+
+\artpage
+    {Cellular Bloom}
+    {Clustered membranes and glow inspired by microscopic growth}
+    {report_assets/cellular_bloom.png}
+    {This composition suggests a colony expanding under magnification. Individual centers remain visible, but the eye is drawn to the thin boundaries and luminous pockets that turn separate seeds into a larger organism-like body. The image feels biological without trying to depict a literal specimen.}
+    {Random seed points generate local glow fields, while nearest-neighbor distance structure is used to form membrane-like separations between regions. Gaussian smoothing blends the scalar field into soft transitions, and filled contour bands convert the result into layered cellular forms. Small seed markers are left visible to reveal the underlying generative structure.}
+
+\end{document}
